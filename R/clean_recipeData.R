@@ -27,8 +27,9 @@ clean_recipeData <- function(recipes = Get_Recipes) {
     unnest(byproduct, names_sep = "_") %>% 
     mutate(byproduct_name = ifelse(itemName == "refined_oil", "hydrogen", byproduct_name), 
            byproduct_amount = ifelse(itemName == "refined_oil", 15, byproduct_amount), 
-           item_qty = round(amount/production_speed, 4)) %>% 
-    select(source, itemName, recipe_id, amount, made_in, production_speed, item_qty) %>% 
+           item_qty = round(amount/production_speed, 4), 
+           item_rate = round(1/(item_qty/(60/production_speed)), 2)) %>% 
+    select(source, itemName, recipe_id, amount, made_in, production_speed, item_qty, item_rate) %>% 
     rename(target = itemName)
 
   return(Cleaned_Recipes)

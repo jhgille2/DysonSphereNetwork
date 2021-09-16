@@ -1,9 +1,9 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|iteration|parent|children|seconds|warnings|error
 Recipe_url|stem|7f74622c60033efb|7b889bc11ab1e12f|ef46db3751d8e999|741281539|https://raw.githubusercontent.com/ShanglinMo/DSP-Calculator/master/data/itemInfo_EN.json|||0|url|vector|||0||
 make_resource_subgraphs|function|c9eb4ba48dee6491||||||||||||||
-clean_recipeData|function|cb14cd8c8faa74ef||||||||||||||
-make_igraph|function|07af0c88372af733||||||||||||||
+clean_recipeData|function|21a2ba148f36868b||||||||||||||
+make_igraph|function|f8756c239d123ea4||||||||||||||
 Get_Recipes|stem|aa8d06a2fd75a854|1599249769c0fe15|c0ca1c8c6d84733d|-2006563158||t18839.7251410314s|e7e2ed075d9e4703|2986|rds|vector|||0.12||
-CleanedData|stem|03eeabe9f4143686|65b31fca40cdc8f3|82303a78f42a41fe|-1889067928||t18857.6919621648s|2e3b895dd66c5738|2614|rds|vector|||0.37|number of items to replace is not a multiple of replacement length|
-Graph|stem|c744b113da86bdca|fd63add795efc2af|fb92d4528e4572fa|-617456092||t18857.691962593s|9a6b99c0e1c6852a|3686|rds|vector|||0.02||
-Resource_SubGraphs|stem|825a16277ad3a8b1|e7ea245affd8e429|e9359cecadfe6063|1843999513||t18857.691962836s|10da61cba4cac40f|44|rds|vector|||0||
+CleanedData|stem|01158a0011eac6b3|65b31fca40cdc8f3|100d563cb16d073a|-1889067928||t18857.8616919488s|76c1c6ea04a6daf5|2865|rds|vector|||0.36|number of items to replace is not a multiple of replacement length|
+Graph|stem|7f7d45dc6bb11289|fd63add795efc2af|a2a41d4a43a6a16f|-617456092||t18857.8616924581s|37aa32dce541efb6|5644|rds|vector|||0.02||
+Resource_SubGraphs|stem|825a16277ad3a8b1|e7ea245affd8e429|6440df0e7f67eb46|1843999513||t18857.8616926664s|10da61cba4cac40f|44|rds|vector|||0||

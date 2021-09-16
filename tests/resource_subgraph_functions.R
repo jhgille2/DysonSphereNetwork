@@ -10,6 +10,9 @@
 tar_load(Graph)
 tar_load(CleanedData)
 
+reduced <- Graph$reduced
+Graph   <- Graph$full
+
 # The starting planet has crude_oil_seep, iron_ore, copper_ore, stone_ore, and coal_ore as starting resources.
 # 1. What components depend on only these resources.
 #   - The components that can be made with the resources on the starting planet.
@@ -40,6 +43,17 @@ get_dependency_graph <- function(fullgraph = Graph, starting_resource = "iron_ve
                                     mode = "out")[[1]]
   
   return(DependencyGraph)
+}
+
+# A function to get the full recipe for some item
+get_component_recipe <- function(fullgraph = Graph, component = "space_warper"){
+  
+  ResourceGraph <- make_ego_graph(graph = fullgraph, 
+                                    order = diameter(fullgraph), 
+                                    nodes = component, 
+                                    mode = "in")[[1]]
+  
+  return(ResourceGraph)
 }
 
 
@@ -119,16 +133,25 @@ ResourceSubset <- function(starting_graph = Graph, starting_resources = starting
     amount_attrs           <- allattrs[which(str_detect(attrnames, "amount"))]
     production_speed_attrs <- allattrs[which(str_detect(attrnames, "production_speed"))]
     item_qty_attrs         <- allattrs[which(str_detect(attrnames, "item_qty"))]
+    item_rate_attrs        <- allattrs[which(str_detect(attrnames, "item_rate"))]
     
     coalesced_attrs_made_in          <- coalesce(!!!made_in_attrs)
     coalesced_attrs_amount           <- coalesce(!!!amount_attrs)
     coalesced_attrs_production_speed <- coalesce(!!!production_speed_attrs)
     coalesced_attrs_item_qty         <- coalesce(!!!item_qty_attrs)
+    coalesced_attrs_item_rate        <- coalesce(!!!item_rate_attrs)
     
     graph <- set_edge_attr(graph = graph, name = "made_in", value = coalesced_attrs_made_in)
     graph <- set_edge_attr(graph = graph, name = "amount", value = coalesced_attrs_amount)
     graph <- set_edge_attr(graph = graph, name = "production_speed", value = coalesced_attrs_production_speed)
     graph <- set_edge_attr(graph = graph, name = "item_qty", value = coalesced_attrs_item_qty)
+    graph <- set_edge_attr(graph = graph, name = "item_rate", value = coalesced_attrs_item_rate)
+    
+    # Remove redundant edge attributes
+    excludeattrs <- attrnames[!(attrnames %in% c("made_in", "amount", "production_speed", "item_qty"))]
+    for(i in seq_along(excludeattrs)){
+      graph <- delete_edge_attr(graph, excludeattrs[[i]])
+    }
     
     return(graph)
   }
@@ -253,9 +276,9 @@ Starting_new <- c("iron_vein",
                     "copper_vein", 
                     "coal_vein", 
                     "stone_vein", 
-                  "titanium_vein", 
-                  "fire_ice_vein", 
-                  "silicon_vein")
+                    "titanium_vein", 
+                    "fire_ice_vein", 
+                    "silicon_vein")
 
 Other_new <- c("crude_oil_seep", 
                "kimberlite_vein", 
@@ -265,5 +288,7 @@ Other_new <- c("crude_oil_seep",
                "spiniform_stalagmite_crystal_vein", 
                "unipolar_magnet_vein")
 
+NewSubset <- ResourceSubset(starting_resources = Starting_new, exclude_resources = Other_new)
 
-createNetworkFromIgraph(ResourceSubset(starting_resources = Starting_new, exclude_resources = Other_new), title = "starting")
+createNetworkFromIgraph(NewSubset, title = "starting_new")
+createNetworkFromIgraph(get_component_recipe(fullgraph = reduced), title = "SpaceWarper")

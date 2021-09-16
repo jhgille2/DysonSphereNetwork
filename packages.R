@@ -1,6 +1,6 @@
 # Install pacman if it does not already exist
 if(!require(pacman)){
-  install.packages(pacman)
+  install.packages("pacman")
 }
 
 # Use pacman to load/install packaged
@@ -11,7 +11,9 @@ pacman::p_load(conflicted,
                tidyverse, 
                jsonlite, 
                magrittr, 
-               igraph)
+               igraph, 
+               visNetwork, 
+               RCy3)
 
 
 conflict_prefer("filter", "dplyr")

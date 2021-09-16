@@ -36,7 +36,7 @@ cyto_from_nodes <- function(fullgraph = igraph_version, components = c("super_ma
                                   mode = "in")
   
   reduced_graph <- do.call(igraph::union, reduced_graph)
-  
+
   createNetworkFromIgraph(fix_made_in(reduced_graph))
 }
 
@@ -59,4 +59,12 @@ InterstellarComps <- c("titanium_alloy",
                        "particle_container", 
                        "processor")
 
-InterstellarTransport <- cyto_from_nodes(components = c())
+# Starting automation
+Auto_start <- c("iron_ingot", 
+                "gear", 
+                "circuit_board", 
+                "magnetic_coil")
+
+cyto_from_nodes(components = Auto_start)
+
+InterstellarTransport <- cyto_from_nodes(components = InterstellarComps)
